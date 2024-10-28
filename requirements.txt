@@ -4,3 +4,4 @@ numpy
 google.cloud
 google-cloud-bigquery
 db-dtypes
+altair
