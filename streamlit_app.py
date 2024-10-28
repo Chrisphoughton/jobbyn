@@ -93,7 +93,7 @@ data_query = f"""
 
 
 
-c1, c2 = st.columns([4, 1])
+c1, c2 = st.columns([5, 1])
 with c2:
     searchButton = st.button("Search for Jobs")
 st.divider()
