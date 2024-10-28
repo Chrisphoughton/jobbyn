@@ -2,8 +2,14 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from google.cloud import bigquery
+import altair as alt
+
 
 # Initialize the BigQuery client with the service account
+# service_account_info = "jobbyn-a159f5cec022.json"
+# client = bigquery.Client.from_service_account_json(service_account_info)
+
+# # Initialize the BigQuery client with the service account
 service_account_info = st.secrets["gcp_service_account"]
 client = bigquery.Client.from_service_account_info(service_account_info)
 
@@ -99,11 +105,18 @@ if searchButton:
     df_options = df_options.drop(columns=["job_id"])
     #title case all column values
    
-    #create horizontal bar chart of companies and rename to company and count to number of jobs
-    companyCount = df_options["ultimate_parent_company_name"].value_counts()
-    companyCount.index.name = "Company"
-    companyCount.name = "Number of Jobs"
-    st.bar_chart(companyCount,horizontal=True, use_container_width=True)
+    #get the count of companies using group by
+    company_count = df_options.groupby("ultimate_parent_company_name").size().reset_index(name="Count")
+    #rename ultimate_parent_company_name to compnay
+    company_count.rename(columns={"ultimate_parent_company_name":"Company"}, inplace=True)
+    
+    chart = alt.Chart(company_count).mark_bar().encode(
+        x=alt.X("Count:Q", title="Number of Jobs"),
+        y=alt.Y("Company:N", title="Company", sort="-x"),
+        
+        tooltip=["Company", "Count"]
+    )
+    st.altair_chart(chart, use_container_width=True)
     st.dataframe(df_options, 
                  column_config={
                      "jobtitle_raw":st.column_config.TextColumn("Job Title"),
