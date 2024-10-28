@@ -16,7 +16,7 @@ client = bigquery.Client.from_service_account_info(service_account_info)
 st.set_page_config(
     page_title="Jobbyn",
     page_icon="🏢",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="collapsed",
     menu_items={
         'About': "# This is a header. This is an *extremely* cool app!"
@@ -50,9 +50,7 @@ df_lookups = loading_lookups(lookups_query)
 
 
 st.title("Jobbyn")
-st.subheader(
-    "Please follow instructions to get the best job for you"
-)
+
 st.divider()
 
 #get unique list of metro_area and sort them
