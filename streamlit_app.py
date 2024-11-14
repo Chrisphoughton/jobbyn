@@ -5,12 +5,12 @@ from google.cloud import bigquery
 import altair as alt
 
 # Initialize the BigQuery client with the service account
-service_account_info = "jobbyn-a159f5cec022.json"
-client = bigquery.Client.from_service_account_json(service_account_info)
+# service_account_info = "jobbyn-a159f5cec022.json"
+# client = bigquery.Client.from_service_account_json(service_account_info)
 
 # # Initialize the BigQuery client with the service account
-# service_account_info = st.secrets["gcp_service_account"]
-# client = bigquery.Client.from_service_account_info(service_account_info)
+service_account_info = st.secrets["gcp_service_account"]
+client = bigquery.Client.from_service_account_info(service_account_info)
 
 st.set_page_config(
     page_title="Jobbyn",
