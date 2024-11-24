@@ -278,7 +278,7 @@ with t1:
                 responsibilities = loading_responsibilities(responsibilities_query)
 
                 
-                with st.container(border=True, height=400):
+                with st.container(border=True, height=300):
                     st.caption("Skills and Responsibilities")
                     st.session_state["job_skills"] = skills["skills"].values[0] if skills["skills"].values[0] is not None else ""
                     st.session_state["job_responsibilities"] = responsibilities["responsibilities"].values[0] if responsibilities["responsibilities"].values[0] is not None else ""
