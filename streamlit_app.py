@@ -279,12 +279,12 @@ with t1:
 
                 c1,c2 = st.columns([1,1])
                 with c1:
-                    with st.container(border=True):
+                    with st.container(border=True, height=400):
                         st.caption("Skills")
                         st.session_state["job_skills"] = skills["skills"].values[0]
                         st.write(st.session_state["job_skills"])
                 with c2:
-                    with st.container(border=True):
+                    with st.container(border=True, height=400):
                         st.caption("Responsibilities")
                         st.session_state["job_responsibilities"] = responsibilities["responsibilities"].values[0]
                         st.write(st.session_state["job_responsibilities"])
