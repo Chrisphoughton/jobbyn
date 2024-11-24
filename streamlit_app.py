@@ -277,16 +277,16 @@ with t1:
                 """
                 responsibilities = loading_responsibilities(responsibilities_query)
 
-                c1,c2 = st.columns([1,1])
-                with c1:
-                    with st.container(border=True, height=400):
-                        st.caption("Skills")
-                        st.session_state["job_skills"] = skills["skills"].values[0]
-                        st.write(st.session_state["job_skills"])
+                
+                with st.container(border=True, height=400):
+                    st.caption("Skills and Responsibilities")
+                    st.session_state["job_skills"] = skills["skills"].values[0] if skills["skills"].values[0] is not None else ""
+                    st.session_state["job_responsibilities"] = responsibilities["responsibilities"].values[0] if responsibilities["responsibilities"].values[0] is not None else ""
+                    st.write(st.session_state["job_skills"] + "\n\n" + st.session_state["job_responsibilities"])
                 with c2:
                     with st.container(border=True, height=400):
                         st.caption("Responsibilities")
-                        st.session_state["job_responsibilities"] = responsibilities["responsibilities"].values[0]
+                        
                         st.write(st.session_state["job_responsibilities"])
                 
 
