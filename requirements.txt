@@ -5,3 +5,5 @@ google.cloud
 google-cloud-bigquery
 db-dtypes
 altair
+OpenAI
+openai
