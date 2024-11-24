@@ -321,7 +321,7 @@ with t1:
                                         messages=[{"role": "system", "content": "You are a helpful assistant that is aiding the user in updating their work experience based on the job posting. They will provide you the job posting skills and responsibilities, as well as their current experiences. You need to do two things which need to be displayed in two different sections: 1. update their experiences to better align with the job posting. 2. Provide a cover letter to the user that is tailored to the job posting. Ensure the tone is professional and tailored for a resume."},
                                                 {"role": "user", "content": prompt}],
                                         temperature=1,
-                                        max_tokens=500,
+                                        max_tokens=1000,
                                         stream=True
                                     )
 
