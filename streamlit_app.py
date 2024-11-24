@@ -310,7 +310,7 @@ with t1:
                         User's Experience:
                         {st.session_state["user_experience"]}
 
-                        Update the user's experience to better align with the job's skills and responsibilities. Maintain authenticity while highlighting relevant accomplishments and transferable skills. Ensure the tone is professional and tailored for a resume.
+                        Provide two parts to the output. 1. Update the user's experience to better align with the job's skills and responsibilities. 2. Provide a cover letter for the job posting. Maintain authenticity while highlighting relevant accomplishments and transferable skills. Ensure the tone is professional and tailored for a resume.
                         """
                         with st.container(border=True):
                             with st.chat_message("ai"):
@@ -318,7 +318,7 @@ with t1:
                                     # Call OpenAI API
                                     response = openAiClient.chat.completions.create(
                                         model="gpt-4o",  # Or "text-davinci-003"
-                                        messages=[{"role": "system", "content": "You are a helpful assistant that is aiding the user in updating their work experience based on the job posting. They will provide you skills and their current experiences and you need to update their experiences to better align with the job posting."},
+                                        messages=[{"role": "system", "content": "You are a helpful assistant that is aiding the user in updating their work experience based on the job posting. They will provide you the job posting skills and responsibilities, as well as their current experiences. You need to do two things which need to be displayed in two different sections: 1. update their experiences to better align with the job posting. 2. Provide a cover letter to the user that is tailored to the job posting. Ensure the tone is professional and tailored for a resume."},
                                                 {"role": "user", "content": prompt}],
                                         temperature=1,
                                         max_tokens=500,
