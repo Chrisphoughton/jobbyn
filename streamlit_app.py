@@ -13,7 +13,7 @@ from openai import OpenAI
 service_account_info = st.secrets["gcp_service_account"]
 client = bigquery.Client.from_service_account_info(service_account_info)
 
-# openAiClient = OpenAI(api_key='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')
+#
 
 openAi_info = st.secrets["openai"]["api_key"]
 openAiClient = OpenAI(api_key=openAi_info)
