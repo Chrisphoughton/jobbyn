@@ -291,7 +291,7 @@ with t1:
                 
 
                 st.divider()
-                if st.button("🤖 Tailor your Experience to the job"):
+                if st.button("🤖 Tailor your resume to the job"):
                     if st.session_state["user_experience"]:
                         # OpenAI API Prompt
                         prompt = f"""
