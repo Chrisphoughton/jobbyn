@@ -50,6 +50,7 @@ def loading_lookups(query):
     #make senorty a string
     dataframe["seniority"] = dataframe["seniority"].astype(str)
     dataframe["seniority"] = dataframe["seniority"].map(seniority_map)
+    #
     #make mapped_role title case
     
     return dataframe
@@ -87,13 +88,14 @@ def loading_responsibilities(query):
 
 # Your SQL query
 lookups_query = """
-    SELECT DISTINCT mapped_role, rics_k50, metro_area, seniority FROM `jobbyn.jobbyn.jobsUpdated`
+    SELECT DISTINCT mapped_role, rics_k50, metro_area, seniority, is_internship FROM `jobbyn.jobbyn.jobsUpdated`
 """
 
 # Use the cached function to get data
 df_lookups = loading_lookups(lookups_query)
 #make seniority a string
 df_lookups["seniority"] = df_lookups["seniority"].astype(str)
+
 
 
 st.image("jobbynLogo.jpg", width = 340)
@@ -153,17 +155,29 @@ with st.sidebar:
         seniorityOptions = st.multiselect("Select your Seniority Levels", seniority)
     #for seniority options take the first leftmost digit and convert to number
     seniorityOptions = [seniority[0] for seniority in seniorityOptions]
+    st.divider()
 
+    #filter internsip based on selected seniority levels
+    df_lookups = df_lookups[df_lookups["seniority"].isin(seniorityOptions)]
+    internship = df_lookups["is_internship"].unique()
+    internship.sort()
+    internshipAllFlag = st.checkbox("Select All Internship Options")
+    if internshipAllFlag:
+        internshipOptions = internship
+        st.multiselect("Select Internship", internship,disabled=True,placeholder="All Job Ypes Selected")
+    else:
+        internshipOptions = st.multiselect("Select your Job Type", internship)
     st.divider()
 
     formatted_location_options = ', '.join(f"'{loc}'" for loc in locationOptions) if len(locationOptions)>0 else "''"
     formatted_job_options = ', '.join(f"'{job}'" for job in jobOptions) if len(jobOptions)>0 else "''"
     formatted_seniority_options = ', '.join(f"'{seniority}'" for seniority in seniorityOptions) if len(seniorityOptions)>0 else "''"
     formatted_industry_options = ', '.join(f"'{industry}'" for industry in industryOptions) if len(industryOptions)>0 else "''"
+    formatted_internship_options = ', '.join(f"'{internship}'" for internship in internshipOptions) if len(internshipOptions)>0 else "''"
 
     data_query = f"""
         SELECT * FROM `jobbyn.jobbyn.jobsUpdated`
-        WHERE metro_area IN ({formatted_location_options}) AND mapped_role IN ({formatted_job_options}) AND seniority IN ({formatted_seniority_options}) AND rics_k50 IN ({formatted_industry_options})
+        WHERE metro_area IN ({formatted_location_options}) AND mapped_role IN ({formatted_job_options}) AND seniority IN ({formatted_seniority_options}) AND rics_k50 IN ({formatted_industry_options}) AND is_internship IN ({formatted_internship_options})
     """
 
     searchButton = st.button("Search for Jobs",disabled=True if (len(locationOptions) == 0 or len(jobOptions) == 0 or len(seniorityOptions) == 0 or len(industryOptions) == 0 or len(df_lookups) > 100000) else False)
@@ -339,7 +353,7 @@ with t1:
         user_experience = st.text_area("Enter your experiences here", height=500)
         st.session_state["user_experience"] = user_experience
     with t3:
-        user_mentorship = st.text_area("Enter your relationship to the mentor here: connections where there is a shared experience; we both graduated from the same college. Or we both served in the military.", height=500)
+        user_mentorship = st.text_area("Enter your relationship to the mentor here:", height=250)
         st.session_state["user_mentorship"] = user_mentorship
         st.divider()
         if st.button("🤖 Generate your mentorship email."):
@@ -371,4 +385,4 @@ with t1:
                         except Exception as e:
                             st.error(f"Error generating updated experience: {e}")
             else:
-                st.warning("Please fill out your Your Experiences before generating.")
+                st.warning("Please fill out your your relationship to the mentor.")
