@@ -40,7 +40,7 @@ if "job_skills" not in st.session_state:
 if "job_responsibilities" not in st.session_state:
     st.session_state.job_responsibilities = None
 
-seniority_map = { "1": "1. Entry Level", "2": "2. Junior Level", "3": "3. Associate Level", "4": "4. Manager Level ", "5": "5. Director Level", "6": "6. Executive Level", "7": "7. Senior Executive Level "}
+seniority_map = { "-1": "0. Internship", "1": "1. Entry Level", "2": "2. Junior Level", "3": "3. Associate Level", "4": "4. Manager Level ", "5": "5. Director Level", "6": "6. Executive Level", "7": "7. Senior Executive Level "}
 
 # Function to query BigQuery and cache the result
 @st.cache_data
@@ -64,7 +64,7 @@ def loading_data(query):
     dataframe["mapped_role"] = dataframe["mapped_role"].str.title()
     dataframe["metro_area"] = dataframe["metro_area"].str.title()
     #reorder columsn to have posting_url after job_id
-    dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date']]
+    dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date','is_internship']]
    
     return dataframe
 
