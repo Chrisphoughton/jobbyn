@@ -345,7 +345,12 @@ with t1:
     with t3:
         user_mentorship = st.text_area("Enter your relationship to the mentor here:", height=250)
         st.session_state["user_mentorship"] = user_mentorship
-        st.write(job_and_company)
+        if job_and_company is not None:
+            st.write(job_and_company)
+        else:
+            st.warning("Please select a job to improve the  your mentorship email.")
+            job_and_company = ""
+
         st.divider()
         if st.button("🤖 Generate your mentorship email."):
             if st.session_state["user_mentorship"]:
