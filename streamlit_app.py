@@ -267,6 +267,7 @@ with t1:
             if row is not None:
                 st.divider()
                 job_and_company = df_options[df_options.index == row]["jobtitle_raw"].values[0] + " at " + df_options[df_options.index == row]["ultimate_parent_company_name"].values[0]
+                st.session_state["job_and_company"] = job_and_company
                 st.write(job_and_company)
                 selected_job_id = df_options[df_options.index == row]["job_id"].values[0]
                 skills_query = f"""
@@ -345,11 +346,10 @@ with t1:
     with t3:
         user_mentorship = st.text_area("Enter your relationship to the mentor here:", height=250)
         st.session_state["user_mentorship"] = user_mentorship
-        if event["selection"]["rows"]:
-            st.write(job_and_company)
+        if st.session_state["job_and_company"] is not None:
+            st.write(st.session_state["job_and_company"])
         else:
             st.warning("Please select a job to improve the  your mentorship email.")
-            job_and_company = ""
 
         st.divider()
         if st.button("🤖 Generate your mentorship email."):
@@ -361,7 +361,7 @@ with t1:
                 {st.session_state["user_mentorship"]}
 
                 Job title and company:
-                {job_and_company}
+                {st.session_state["job_and_company"]}
 
                 Provide the mentorship email.
                 """
