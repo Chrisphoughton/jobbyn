@@ -345,12 +345,7 @@ with t1:
     with t3:
         user_mentorship = st.text_area("Enter your relationship to the mentor here:", height=250)
         st.session_state["user_mentorship"] = user_mentorship
-        if row is not None:
-                st.divider()
-                job_and_company = df_options[df_options.index == row]["jobtitle_raw"].values[0] + " at " + df_options[df_options.index == row]["ultimate_parent_company_name"].values[0]
-                st.write(job_and_company)
-        else:
-            st.caption("Select a job to include in your mentorship email")
+        st.write(job_and_company)
         st.divider()
         if st.button("🤖 Generate your mentorship email."):
             if st.session_state["user_mentorship"]:
