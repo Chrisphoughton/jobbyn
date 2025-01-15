@@ -345,6 +345,12 @@ with t1:
     with t3:
         user_mentorship = st.text_area("Enter your relationship to the mentor here:", height=250)
         st.session_state["user_mentorship"] = user_mentorship
+        if row is not None:
+                st.divider()
+                job_and_company = df_options[df_options.index == row]["jobtitle_raw"].values[0] + " at " + df_options[df_options.index == row]["ultimate_parent_company_name"].values[0]
+                st.write(job_and_company)
+        else:
+            st.caption("Select a job to include in your mentorship email")
         st.divider()
         if st.button("🤖 Generate your mentorship email."):
             if st.session_state["user_mentorship"]:
@@ -354,6 +360,9 @@ with t1:
                 Mentorship relationship:
                 {st.session_state["user_mentorship"]}
 
+                Job title and company:
+                {job_and_company}
+
                 Provide the mentorship email.
                 """
                 with st.container(border=True):
@@ -362,7 +371,7 @@ with t1:
                             # Call OpenAI API
                             response = openAiClient.chat.completions.create(
                                 model="gpt-4o",  # Or "text-davinci-003"
-                                messages=[{"role": "system", "content": "You are a helpful assistant that is aiding the user to create an email to a mentor. The mentor is someone who works at an organization where they are seeking to finding a job. They will provide you with details about their relationship to the mentor. Do not be overly direct about their interest in a job, instead focus on building the relationship. Ensure the tone is professional and tailored for a user. Here is an example of a email template: Subject: Request for Mentorship: Insights into Your Path to Government Service. Dear Mr. Cassidy, I hope this message finds you well. My name is <user>, and I am currently exploring pathways toward a career in public service. I came across your LinkedIn profile and was impressed by your journey from graduating from an Ivy League institution to serving in the U.S. Government. As a current student with a strong interest in public service, I would love to better understand the steps you took to navigate this field. Your experiences and insights into breaking into and excelling in government roles would be incredibly valuable. If your schedule permits, I would greatly appreciate the opportunity to connect for a brief call or meeting. I am eager to learn about your journey, any challenges you faced, and any advice you might have for someone aspiring to follow a similar path. Thank you for considering my request. I truly appreciate your time and look forward to the possibility of connecting. Best regards, <user>. [User LinkedIn Profile: https://www.linkedin.com/in/finnmiller2024/] [User Contact Information]. At the end of the output please always include the following text within the square brackets: [Attention Jobbyn Users: Ensure Accuracy in Your Resume and Cover Letter. We want to remind all users that it is your sole responsibility to ensure that both your resume and cover letter are accurate representations of your skills and experiences. Providing truthful and precise information is crucial for your job search success and maintaining the integrity of our platform. Copy and paste your customized resume and cover letter into a word document and make the necessary edits to ensure accuracy. I have read and agree to these terms.]"},
+                                messages=[{"role": "system", "content": "You are a helpful assistant that is aiding the user to create an email to a mentor. The mentor is someone who works at an organization where they are seeking to finding a job. They will provide you with details about their relationship to the mentor and the title and company of the job they are interested in. Do not be overly direct about their interest in a job, instead focus on building the relationship. Ensure the tone is professional and tailored for a user. Here is an example of a email template: Subject: Request for Mentorship: Insights into Your Path to Government Service. Dear Mr. Cassidy, I hope this message finds you well. My name is <user>, and I am currently exploring pathways toward a career in public service. I came across your LinkedIn profile and was impressed by your journey from graduating from an Ivy League institution to serving in the U.S. Government. As a current student with a strong interest in public service, I would love to better understand the steps you took to navigate this field. Your experiences and insights into breaking into and excelling in government roles would be incredibly valuable. If your schedule permits, I would greatly appreciate the opportunity to connect for a brief call or meeting. I am eager to learn about your journey, any challenges you faced, and any advice you might have for someone aspiring to follow a similar path. Thank you for considering my request. I truly appreciate your time and look forward to the possibility of connecting. Best regards, <user>. [User LinkedIn Profile: https://www.linkedin.com/in/finnmiller2024/] [User Contact Information]. At the end of the output please always include the following text within the square brackets: [Attention Jobbyn Users: Ensure Accuracy in Your Resume and Cover Letter. We want to remind all users that it is your sole responsibility to ensure that both your resume and cover letter are accurate representations of your skills and experiences. Providing truthful and precise information is crucial for your job search success and maintaining the integrity of our platform. Copy and paste your customized resume and cover letter into a word document and make the necessary edits to ensure accuracy. I have read and agree to these terms.]"},
                                         {"role": "user", "content": prompt}],
                                 temperature=1,
                                 max_tokens=1000,
