@@ -260,6 +260,8 @@ with t1:
                 "job_id": st.column_config.TextColumn("Job ID"),
                 "posting_url": st.column_config.LinkColumn("Posting Link", display_text="🔗"),
                 "is_internship": st.column_config.TextColumn("Internship")
+                "skills": st.column_config.TextColumn("Skills"),
+                "responsibilities": st.column_config.TextColumn("Responsibilities")
             },
             use_container_width=True,
             selection_mode="single-row",
