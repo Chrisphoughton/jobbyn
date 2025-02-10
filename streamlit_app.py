@@ -272,24 +272,11 @@ with t1:
                 job_and_company = df_options[df_options.index == row]["jobtitle_raw"].values[0] + " at " + df_options[df_options.index == row]["ultimate_parent_company_name"].values[0]
                 st.session_state["job_and_company"] = job_and_company
                 st.write(job_and_company)
-                selected_job_id = df_options[df_options.index == row]["job_id"].values[0]
-                skills_query = f"""
-                    SELECT skills FROM `jobbyn.jobbyn.skill`
-                    WHERE job_id = {selected_job_id}
-                """
-                skills = loading_skill(skills_query)
-
-                responsibilities_query = f"""
-                    SELECT responsibilities FROM `jobbyn.jobbyn.responsibilities`
-                    WHERE job_id = {selected_job_id}
-                """
-                responsibilities = loading_responsibilities(responsibilities_query)
-
                 
+                st.session_state["job_skills"] = df_options[df_options.index == row]["skills"].values[0]
+                st.session_state["job_responsibilities"] = df_options[df_options.index == row]["responsibilities"].values[0]
                 with st.container(border=True, height=300):
                     st.caption("Skills and Responsibilities")
-                    st.session_state["job_skills"] = skills["skills"].values[0] if skills["skills"].values[0] is not None else ""
-                    st.session_state["job_responsibilities"] = responsibilities["responsibilities"].values[0] if responsibilities["responsibilities"].values[0] is not None else ""
                     st.write(st.session_state["job_skills"] + "\n\n" + st.session_state["job_responsibilities"])
                 
 
