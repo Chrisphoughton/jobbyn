@@ -46,6 +46,7 @@ if "job_and_company" not in st.session_state:
 seniority_map = { "0": "0. Internship", "1": "1. Entry Level", "2": "2. Junior Level", "3": "3. Associate Level", "4": "4. Manager Level ", "5": "5. Director Level", "6": "6. Executive Level", "7": "7. Senior Executive Level "}
 
 # Function to query BigQuery and cache the result
+st.cache_data(ttl=3600) # Cache for 1 hour  
 def loading_lookups(query):
     query_job = client.query(query)
     dataframe = query_job.result().to_dataframe()
