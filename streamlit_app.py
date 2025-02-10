@@ -90,7 +90,7 @@ def loading_responsibilities(query):
 
 # Your SQL query
 lookups_query = """
-    SELECT mapped_role, rics_k50, metro_area, seniorityFROM `jobbyn.jobbyn.lookups`
+    SELECT mapped_role, rics_k50, metro_area, seniority FROM `jobbyn.jobbyn.lookups`
 """
 
 # Use the cached function to get data
