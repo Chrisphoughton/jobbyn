@@ -69,8 +69,8 @@ def loading_data(query):
     #reorder columsn to have posting_url after job_id
     dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date','skills','responsibilities']]
     #3set "" to None
-    dataframe["skills"] = dataframe["skills"].apply(lambda x: None if x == "" else x)
-    dataframe["responsibilities"] = dataframe["responsibilities"].apply(lambda x: None if x == "" else x)
+    dataframe["skills"] = dataframe["skills"].apply(lambda x: "" if x == None else x)
+    dataframe["responsibilities"] = dataframe["responsibilities"].apply(lambda x: "" if x == None else x)
 
     return dataframe
 
