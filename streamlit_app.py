@@ -15,7 +15,7 @@ client = bigquery.Client.from_service_account_info(service_account_info)
 
 
 openAi_info = st.secrets["openai"]["api_key"]
-openAiClient = OpenAI(api_key=openAi_info)
+openAiClient = OpenAI(api_key=openAi_info) 
 
 st.set_page_config(
     page_title="Jobbyn",
