@@ -259,7 +259,7 @@ with t1:
                 "post_date": st.column_config.TextColumn("Posted Date"),
                 "job_id": st.column_config.TextColumn("Job ID"),
                 "posting_url": st.column_config.LinkColumn("Posting Link", display_text="🔗"),
-                "is_internship": st.column_config.TextColumn("Internship")
+                "is_internship": st.column_config.TextColumn("Internship"),
                 "skills": st.column_config.TextColumn("Skills"),
                 "responsibilities": st.column_config.TextColumn("Responsibilities")
             },
