@@ -67,7 +67,7 @@ def loading_data(query):
     dataframe["mapped_role"] = dataframe["mapped_role"].str.title()
     dataframe["metro_area"] = dataframe["metro_area"].str.title()
     #reorder columsn to have posting_url after job_id
-    dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date','is_internship','skills','responsibilities']]
+    dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date','skills','responsibilities']]
    
     return dataframe
 
