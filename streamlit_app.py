@@ -278,7 +278,7 @@ with t1:
                 # use the job_id to get the skills
                 job_id = df_options[df_options.index == row]["job_id"].values[0]
                 skills_query = f"""
-                    SELECT skills FROM `jobbyn.jobbyn.skills`
+                    SELECT skills FROM `jobbyn.jobbyn.jobsUpdated`
                     WHERE job_id = '{job_id}'
                 """
                 df_skills = loading_skill(skills_query)
@@ -286,7 +286,7 @@ with t1:
 
                 # use the job_id to get the responsibilities
                 responsibilities_query = f"""
-                    SELECT responsibilities FROM `jobbyn.jobbyn.responsibilities`
+                    SELECT responsibilities FROM `jobbyn.jobbyn.jobsUpdated`
                     WHERE job_id = '{job_id}'
                 """
                 df_responsibilities = loading_responsibilities(responsibilities_query)
