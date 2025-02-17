@@ -91,7 +91,7 @@ def loading_responsibilities(query):
 
 # Your SQL query
 lookups_query = """
-    SELECT DISTINCT mapped_role, rics_k50, metro_area, seniority FROM `jobbyn.jobbyn.jobsUpdated`
+    SELECT DISTINCT mapped_role, rics_k50, metro_area, seniority FROM `jobbyn.jobbyn.jobsClustered`
 """
 
 # Use the cached function to get data
@@ -168,7 +168,7 @@ with st.sidebar:
     formatted_industry_options = ', '.join(f"'{industry}'" for industry in industryOptions) if len(industryOptions)>0 else "''"
 
     data_query = f"""
-        SELECT * FROM `jobbyn.jobbyn.jobsUpdated`
+        SELECT * FROM `jobbyn.jobbyn.jobsClustered`
         WHERE metro_area IN ({formatted_location_options}) AND mapped_role IN ({formatted_job_options}) AND seniority IN ({formatted_seniority_options}) AND rics_k50 IN ({formatted_industry_options})
     """
 
@@ -278,7 +278,7 @@ with t1:
                 # use the job_id to get the skills
                 job_id = df_options[df_options.index == row]["job_id"].values[0]
                 skills_query = f"""
-                    SELECT skills FROM `jobbyn.jobbyn.jobsUpdated`
+                    SELECT skills FROM `jobbyn.jobbyn.jobsClustered`
                     WHERE CAST(job_id AS STRING) = '{job_id}'
                 """
                 df_skills = loading_skill(skills_query)
@@ -286,7 +286,7 @@ with t1:
 
                 # use the job_id to get the responsibilities
                 responsibilities_query = f"""
-                    SELECT responsibilities FROM `jobbyn.jobbyn.jobsUpdated`
+                    SELECT responsibilities FROM `jobbyn.jobbyn.jobsClustered`
                     WHERE CAST(job_id AS STRING) = '{job_id}'
                 """
                 df_responsibilities = loading_responsibilities(responsibilities_query)
