@@ -67,10 +67,7 @@ def loading_data(query):
     dataframe["mapped_role"] = dataframe["mapped_role"].str.title()
     dataframe["metro_area"] = dataframe["metro_area"].str.title()
     #reorder columsn to have posting_url after job_id
-    dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date','skills','responsibilities']]
-    #3set "" to None
-    dataframe["skills"] = dataframe["skills"].apply(lambda x: "" if x == None else x)
-    dataframe["responsibilities"] = dataframe["responsibilities"].apply(lambda x: "" if x == None else x)
+    dataframe = dataframe[['job_id','jobtitle_raw','posting_url', 'mapped_role', 'ultimate_parent_company_name', 'metro_area', 'state', 'location', 'rics_k50', 'seniority', 'total_compensation', 'remote_type', 'post_date']]
 
     return dataframe
 
@@ -78,7 +75,7 @@ def loading_skill(query):
     query_job = client.query(query)
     dataframe = query_job.result().to_dataframe()
     #set "" to None
-    dataframe["skills"] = dataframe["skills"].apply(lambda x: None if x == "" else x)
+    dataframe["skills"] = dataframe["skills"].apply(lambda x: "" if x == None else x)
     
    
     return dataframe
@@ -87,7 +84,7 @@ def loading_responsibilities(query):
     query_job = client.query(query)
     dataframe = query_job.result().to_dataframe()
     #set "" to None
-    dataframe["responsibilities"] = dataframe["responsibilities"].apply(lambda x: None if x == "" else x)
+    dataframe["responsibilities"] = dataframe["responsibilities"].apply(lambda x: "" if x == None else x)
     
    
     return dataframe
@@ -278,8 +275,24 @@ with t1:
                 st.session_state["job_and_company"] = job_and_company
                 st.write(job_and_company)
                 
-                st.session_state["job_skills"] = df_options[df_options.index == row]["skills"].values[0]
-                st.session_state["job_responsibilities"] = df_options[df_options.index == row]["responsibilities"].values[0]
+                # use the job_id to get the skills
+                job_id = df_options[df_options.index == row]["job_id"].values[0]
+                skills_query = f"""
+                    SELECT skills FROM `jobbyn.jobbyn.skills`
+                    WHERE job_id = '{job_id}'
+                """
+                df_skills = loading_skill(skills_query)
+                st.session_state["job_skills"] = df_skills["skills"].values[0]
+
+                # use the job_id to get the responsibilities
+                responsibilities_query = f"""
+                    SELECT responsibilities FROM `jobbyn.jobbyn.responsibilities`
+                    WHERE job_id = '{job_id}'
+                """
+                df_responsibilities = loading_responsibilities(responsibilities_query)
+                st.session_state["job_responsibilities"] = df_responsibilities["responsibilities"].values[0]
+
+
                 with st.container(border=True, height=300):
                     st.caption("Skills and Responsibilities")
                     st.write(st.session_state["job_skills"] + "\n\n" + st.session_state["job_responsibilities"])
