@@ -170,6 +170,7 @@ with st.sidebar:
     data_query = f"""
         SELECT * FROM `jobbyn.jobbyn.jobsClustered`
         WHERE metro_area IN ({formatted_location_options}) AND mapped_role IN ({formatted_job_options}) AND seniority IN ({formatted_seniority_options}) AND rics_k50 IN ({formatted_industry_options})
+        ORDER BY post_date DESC
     """
 
     searchButton = st.button("Search for Jobs",disabled=True if (len(locationOptions) == 0 or len(jobOptions) == 0 or len(seniorityOptions) == 0 or len(industryOptions) == 0 or len(df_lookups) > 100000) else False)
