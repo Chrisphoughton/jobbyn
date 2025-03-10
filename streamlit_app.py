@@ -102,7 +102,7 @@ df_lookups["seniority"] = df_lookups["seniority"].astype(str)
 
 
 
-st.image("logo.png", width = 340)
+st.image("logo.png", width = 250)
 
 
 # Get unique list of metro_area and sort them
